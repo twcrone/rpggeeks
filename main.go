@@ -100,8 +100,8 @@ func main() {
 
 	router.GET("/delete", func(c *gin.Context) {
 		id := c.Request.URL.Query().Get("id")
-		c.String(http.StatusOK, "Deleting player with ID = " + id + "\n")
-		if _, err := db.Exec("DELETE FROM players WHERE id=" + id + ");"); err != nil {
+		c.String(http.StatusOK, "Deleting player with ID = "+id+"\n")
+		if _, err := db.Exec("DELETE FROM players WHERE id=" + id + ";"); err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("Error deleting player: %q", err))
 			return

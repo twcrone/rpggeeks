@@ -39,6 +39,22 @@ or
 [![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
 
 
+## GETful API
+
+###`/` -> lists players
+
+```
+1	->	Todd	(twcrone@gmail.com)
+2	->	Matt	(eightbit@gmail.com)
+```
+
+###`/create?name=Bob&email=bob@zyz.com` -> create player
+
+###`/delete?id=1` -> deletes player with id=1
+
+
+
+
 ## Documentation
 
 For more information about using Go on Heroku, see these Dev Center articles:

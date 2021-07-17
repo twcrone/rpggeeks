@@ -1,12 +1,12 @@
 {
-  "name": "Start on Heroku: Go",
-  "description": "Go Getting Started Example App",
+  "name": "RPG Geeks",
+  "description": "Simple Go web app for tracking rpg players",
   "keywords": [
-    "getting-started",
+    "rpg",
     "go",
-    "sample",
-    "example"
+    "geek",
+    "crone"
   ],
-  "website": "http://github.com/heroku/rpggeeks",
-  "repository": "http://github.com/heroku/rpggeeks"
+  "website": "https://github.com/twcrone/rpggeeks",
+  "repository": "https://github.com/twcrone/rpggeeks"
 }

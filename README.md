@@ -20,7 +20,7 @@ github.com/manucorporat/sse
 github.com/heroku/x/hmetrics/onload
 github.com/gin-gonic/gin/binding
 github.com/gin-gonic/gin
-github.com/heroku/go-getting-started
+github.com/heroku/rpggeeks
 $ heroku local
 ```
 

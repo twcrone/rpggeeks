@@ -28,7 +28,7 @@ func repeatHandler(r int) gin.HandlerFunc {
 func listPlayers(db *sql.DB) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		_, err := db.Exec("CREATE TABLE IF NOT EXISTS players (user_id serial PRIMARY KEY, name varchar(50), email varchar(255));")
-		if  err != nil {
+		if err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("error creating database table: %q", err))
 			return
@@ -42,7 +42,7 @@ func listPlayers(db *sql.DB) gin.HandlerFunc {
 		defer rows.Close()
 		for rows.Next() {
 			var (
-				name string
+				name  string
 				email string
 			)
 			err := rows.Scan(&name, &email)
@@ -51,7 +51,7 @@ func listPlayers(db *sql.DB) gin.HandlerFunc {
 					fmt.Sprintf("error scanning table row: %q", err))
 				return
 			}
-			c.String(http.StatusOK, fmt.Sprintf("Player: %s (%s)", name, email))
+			c.String(http.StatusOK, fmt.Sprintf("- %s (%s)\n", name, email))
 		}
 	}
 }
@@ -92,9 +92,9 @@ func main() {
 
 	router.GET("/player", func(c *gin.Context) {
 		name := c.Request.URL.Query().Get("name")
-		c.String(http.StatusOK, "Name is " + name + "\n")
+		c.String(http.StatusOK, "Name is "+name+"\n")
 		email := c.Request.URL.Query().Get("email")
-		c.String(http.StatusOK, "Email is " + email + "\n")
+		c.String(http.StatusOK, "Email is "+email+"\n")
 		if _, err := db.Exec("INSERT INTO players (name, email) VALUES ('" + name + "','" + email + "');"); err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("Error creating player: %q", err))

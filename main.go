@@ -46,7 +46,7 @@ func listPlayers(db *sql.DB) gin.HandlerFunc {
 				name  string
 				email string
 			)
-			err := rows.Scan(&name, &email)
+			err := rows.Scan(&id, &name, &email)
 			if err != nil {
 				c.String(http.StatusInternalServerError,
 					fmt.Sprintf("error scanning table row: %q", err))

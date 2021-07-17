@@ -12,7 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
 	_ "github.com/lib/pq"
-	"github.com/russross/blackfriday"
 )
 
 func repeatHandler(r int) gin.HandlerFunc {
@@ -79,17 +78,13 @@ func main() {
 	router.LoadHTMLGlob("templates/*.tmpl.html")
 	router.Static("/static", "static")
 
-	router.GET("/", func(c *gin.Context) {
+	router.GET("/old-index", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.tmpl.html", nil)
-	})
-
-	router.GET("/mark", func(c *gin.Context) {
-		c.String(http.StatusOK, string(blackfriday.Run([]byte("**hi!**"))))
 	})
 
 	router.GET("/repeat", repeatHandler(repeat))
 
-	router.GET("/list", listPlayers(db))
+	router.GET("/", listPlayers(db))
 
 	router.GET("/create", func(c *gin.Context) {
 		name := c.Request.URL.Query().Get("name")
@@ -99,6 +94,16 @@ func main() {
 		if _, err := db.Exec("INSERT INTO players (name, email) VALUES ('" + name + "','" + email + "');"); err != nil {
 			c.String(http.StatusInternalServerError,
 				fmt.Sprintf("Error creating player: %q", err))
+			return
+		}
+	})
+
+	router.GET("/delete", func(c *gin.Context) {
+		id := c.Request.URL.Query().Get("id")
+		c.String(http.StatusOK, "Deleting player with ID = " + id + "\n")
+		if _, err := db.Exec("DELETE FROM players WHERE id=" + id + ");"); err != nil {
+			c.String(http.StatusInternalServerError,
+				fmt.Sprintf("Error deleting player: %q", err))
 			return
 		}
 	})

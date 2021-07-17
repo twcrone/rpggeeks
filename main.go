@@ -90,5 +90,17 @@ func main() {
 
 	router.GET("/players", listPlayers(db))
 
+	router.GET("/player", func(c *gin.Context) {
+		name := c.Request.URL.Query().Get("name")
+		c.String(http.StatusOK, "Name is " + name + "\n")
+		email := c.Request.URL.Query().Get("email")
+		c.String(http.StatusOK, "Email is " + email + "\n")
+		if _, err := db.Exec("INSERT INTO players (name, email) VALUES (" + name + "," + email + ");"); err != nil {
+			c.String(http.StatusInternalServerError,
+				fmt.Sprintf("Error creating player: %q", err))
+			return
+		}
+	})
+
 	router.Run(":" + port)
 }
